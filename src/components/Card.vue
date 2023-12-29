@@ -1,10 +1,10 @@
 <template>
-  <div class="card" @click="flipCard">
+  <div class="card" :class="{ flipped: isFlipped }" @click="flipCard">
     <div class="back"></div>
-    <div class="face" v-if="isFlipped">
-      <div class="suit top">{{ cardSuit }}</div>
+    <div class="face">
+      <div class="suit top" :class="cardSuitColor">{{ cardSuit }}</div>
       <div class="rank">{{ cardRank }}</div>
-      <div class="suit bottom">{{ cardSuit }}</div>
+      <div class="suit bottom" :class="cardSuitColor">{{ cardSuit }}</div>
     </div>
   </div>
 </template>
@@ -23,6 +23,11 @@ export default {
   methods: {
     flipCard() {
       this.isFlipped = !this.isFlipped;
+    },
+  },
+  computed: {
+    cardSuitColor() {
+      return this.cardSuit === "♥" || this.cardSuit === "♦" ? "red" : "black";
     },
   },
 };
@@ -49,9 +54,9 @@ export default {
 
 .face,
 .back {
+  position: absolute;
   width: 100%;
   height: 100%;
-  position: absolute;
   backface-visibility: hidden;
 }
 
@@ -60,14 +65,15 @@ export default {
   grid-template-columns: 20px 1fr 20px;
   padding-left: 0.25rem;
   padding-right: 0.25rem;
+  transform: rotateY(180deg);
 }
 
 .back {
-  background-color: blue; /* Change as needed */
-  background-image: url("../assets/Reverso_baraja_española_rojo.svg"); /* Update with your back image */
+  background-color: blue; /* Or as needed */
+  background-image: url("../assets/Reverso_baraja_española_rojo.svg");
   background-position: center;
   background-size: cover;
-  transform: rotateY(180deg);
+  transform: rotateY(0deg);
 }
 
 .suit {

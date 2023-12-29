@@ -42,13 +42,14 @@
     </div>
   </div>
 
-  <div id="deck" class="deck-area">
+  <div id="deck" class="deck-area" :style="{ height: deckHeight + 'px' }">
     <div class="cards-container">
       <Card
         v-for="card in cards"
         :key="card.id"
         :card-rank="card.rank"
         :card-suit="card.suit"
+        :class="getCardColor(card.suit)"
       />
     </div>
   </div>
@@ -131,6 +132,14 @@ export default {
     },
     flipCard(card) {
       card.faceUp = !card.faceUp;
+    },
+    getCardColor(suit) {
+      return this.suitColor[suit];
+    },
+  },
+  computed: {
+    deckHeight() {
+      return 500 + (this.cards.length - 1) * 5;
     },
   },
 };
@@ -294,5 +303,11 @@ header {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.deck-area .cards-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 </style>
