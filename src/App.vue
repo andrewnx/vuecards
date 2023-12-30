@@ -173,7 +173,6 @@ header {
 .player .card,
 .dealer .card,
 .deck .card {
-  margin: 0.5rem;
   flex: 0 1 calc(33.333% - 1rem);
 }
 
@@ -184,36 +183,13 @@ header {
 
 #player2 {
   background-color: #455a64;
-  color: var(--vt-c-white);
+  color: var(--vt-c-black);
 }
 
 #deck {
   background-color: #e8f5e9;
   position: relative;
   height: 150px;
-}
-
-/* Stacked Card Styling */
-.deck .card {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%) rotate(0deg);
-  transition: transform 0.3s ease;
-  backface-visibility: hidden;
-}
-
-.deck .card:nth-child(odd) {
-  transform: translateX(-50%) rotate(-3deg);
-}
-
-.deck .card:nth-child(even) {
-  transform: translateX(-50%) rotate(3deg);
-}
-
-.deck .card:hover {
-  transform: translateX(-50%) rotate(0deg) translateY(-10px);
-  z-index: 10;
 }
 
 /* Score Style */

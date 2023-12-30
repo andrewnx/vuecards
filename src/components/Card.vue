@@ -2,6 +2,7 @@
   <div class="card" :class="{ flipped: isFlipped }" @click="flipCard">
     <div class="back"></div>
     <div class="face">
+      <!-- Apply cardSuitColor to the suit elements -->
       <div class="suit top" :class="cardSuitColor">{{ cardSuit }}</div>
       <div class="rank">{{ cardRank }}</div>
       <div class="suit bottom" :class="cardSuitColor">{{ cardSuit }}</div>
@@ -35,10 +36,6 @@ export default {
 
 <style scoped>
 .card {
-  border-radius: 5px;
-  border-width: 1px;
-  border-style: solid;
-  border-color: black;
   width: 70px;
   height: 100px;
   margin-bottom: 0.25rem;
@@ -46,6 +43,8 @@ export default {
   transform-style: preserve-3d;
   transition: transform 1s;
   position: relative;
+  border: none;
+  padding: 0;
 }
 
 .card.flipped {
@@ -69,7 +68,6 @@ export default {
 }
 
 .back {
-  background-color: blue; /* Or as needed */
   background-image: url("../assets/Reverso_baraja_española_rojo.svg");
   background-position: center;
   background-size: cover;
@@ -97,5 +95,17 @@ export default {
   grid-column: 3;
   text-align: center;
   transform: rotate(180deg);
+}
+
+.card .suit {
+  color: inherit; /* or specify red/black explicitly */
+}
+
+.card .red {
+  color: #ff0000;
+}
+
+.card .black {
+  color: #000000;
 }
 </style>
