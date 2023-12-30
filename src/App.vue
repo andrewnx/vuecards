@@ -1,10 +1,10 @@
 <template>
+  <!-- Existing UI elements -->
+  <button v-if="shufflebutton" @click="shuffleDeck">Shuffle</button>
+
   <!-- Game Mode Selection -->
   <button @click="setGameMode('blackjack')">Blackjack Mode</button>
   <button @click="setGameMode('poker')">Poker Mode</button>
-
-  <!-- Existing UI elements -->
-  <button v-if="shufflebutton" @click="shuffleDeck">Shuffle</button>
 
   <!-- Deal Buttons -->
   <template v-for="count in 7">
@@ -15,6 +15,10 @@
       Deal {{ count }}: Dealer
     </button>
   </template>
+
+  <button @click="flipPlayerCards">Flip Player Cards</button>
+  <button @click="flipDealerCards">Flip Dealer Cards</button>
+  <button @click="flipAllCards">Flip All Cards</button>
 
   <button @click="restart">Restart</button>
 
@@ -135,6 +139,20 @@ export default {
     },
     getCardColor(suit) {
       return this.suitColor[suit];
+    },
+    flipPlayerCards() {
+      this.p1.forEach((card) => {
+        card.isFlipped = !card.isFlipped;
+      });
+    },
+    flipDealerCards() {
+      this.p2.forEach((card) => {
+        card.isFlipped = !card.isFlipped;
+      });
+    },
+    flipAllCards() {
+      this.flipPlayerCards();
+      this.flipDealerCards();
     },
   },
   computed: {
