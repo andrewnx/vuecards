@@ -30,6 +30,8 @@
         :key="card.id"
         :card-rank="card.rank"
         :card-suit="card.suit"
+        :is-flipped="card.isFlipped"
+        @flip="flipCard(card)"
       />
     </div>
   </div>
@@ -42,11 +44,18 @@
         :key="card.id"
         :card-rank="card.rank"
         :card-suit="card.suit"
+        :is-flipped="card.isFlipped"
+        @flip="flipCard(card)"
       />
     </div>
   </div>
 
-  <div id="deck" class="deck-area" :style="{ height: deckHeight + 'px' }">
+  <div
+    id="deck"
+    class="deck-area"
+    :class="{ 'is-shuffling': isShuffling }"
+    :style="{ height: deckHeight + 'px' }"
+  >
     <div class="cards-container">
       <Card
         v-for="card in cards"
@@ -83,6 +92,7 @@ export default {
       },
       shuffleSpeed: "shuffleMedium",
       currentMode: null,
+      isShuffling: false,
     };
   },
   created() {
@@ -104,6 +114,7 @@ export default {
       }
     },
     shuffleDeck() {
+      this.isShuffling = true;
       this.dealbutton = 1;
       for (let i = this.cards.length - 1; i > 0; i--) {
         let randomIndex = Math.floor(Math.random() * (i + 1));
@@ -111,6 +122,10 @@ export default {
         this.cards[i] = this.cards[randomIndex];
         this.cards[randomIndex] = temp;
       }
+
+      setTimeout(() => {
+        this.isShuffling = false;
+      }, 1000);
     },
     dealCards(count, recipient) {
       for (let i = 0; i < count; i++) {
@@ -135,7 +150,7 @@ export default {
       this.shufflebutton = 1;
     },
     flipCard(card) {
-      card.faceUp = !card.faceUp;
+      card.isFlipped = !card.isFlipped;
     },
     getCardColor(suit) {
       return this.suitColor[suit];
@@ -303,5 +318,22 @@ header {
   position: relative;
   width: 100%;
   height: 100%;
+}
+
+@keyframes shuffleAnimation {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+.deck-area.is-shuffling .card {
+  animation: shuffleAnimation 1s ease-in-out;
 }
 </style>

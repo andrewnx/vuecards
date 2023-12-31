@@ -15,15 +15,16 @@ export default {
   props: {
     cardSuit: String,
     cardRank: String,
+    isFlipped: Boolean,
   },
-  data() {
+  /* data() {
     return {
       isFlipped: false, // Initially cards are face down
     };
-  },
+  }, */
   methods: {
     flipCard() {
-      this.isFlipped = !this.isFlipped;
+      this.$emit("flip");
     },
   },
   computed: {
